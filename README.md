@@ -1,6 +1,6 @@
-# Minecraft Beat-Sync Cutter 🎬🎵
+# Beat-Sync Cutter 🎬🎵
 
-Automatically cut and sync Minecraft cinematics (or any video footage) to audio beats, transients, kick drums, and synth drops using Python, **Librosa** audio onset detection, and **FFmpeg**.
+Automatically cut and sync cinematics (or any video footage) to audio beats, transients, kick drums, and synth drops using Python, **Librosa** audio onset detection, and **FFmpeg**.
 
 ---
 
