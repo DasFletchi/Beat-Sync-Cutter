@@ -23,12 +23,27 @@ def get_video_duration(video_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Sync video scene cuts to audio beat/onset hits.")
-    parser.add_argument("--video", "-v", required=True, help="Path to input video file (e.g., Minecraft Cinematics)")
-    parser.add_argument("--audio", "-a", required=True, help="Path to input audio file (e.g., MP3/WAV track)")
+    parser.add_argument("--gui", action="store_true", help="Launch Graphical User Interface (GUI)")
+    parser.add_argument("--video", "-v", help="Path to input video file")
+    parser.add_argument("--audio", "-a", help="Path to input audio file")
     parser.add_argument("--output", "-o", default="output_synced.mp4", help="Path for synced output MP4 file")
     parser.add_argument("--min-cut-dur", type=float, default=0.35, help="Minimum cut duration in seconds (default: 0.35)")
     parser.add_argument("--scale", default="1280:-2", help="FFmpeg output scale resolution (default: 1280:-2)")
     args = parser.parse_args()
+
+    if args.gui:
+        try:
+            import gui
+            gui.main()
+            return
+        except ImportError as e:
+            print(f"Error launching GUI. Make sure PyQt6 is installed (`pip install PyQt6`).\n{e}")
+            sys.exit(1)
+
+    if not args.video or not args.audio:
+        print("Error: --video and --audio are required when running in CLI mode (or run `python beat_sync_cutter.py --gui`).")
+        sys.exit(1)
+
 
     video_file = os.path.abspath(args.video)
     audio_file = os.path.abspath(args.audio)

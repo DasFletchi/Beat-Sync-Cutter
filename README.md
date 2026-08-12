@@ -44,28 +44,30 @@ cd Beat-Sync-Cutter
 
 ---
 
-### 3️⃣ Install Required Python Packages
+### 3️⃣ Benötigte Pakete installieren
 
-Run this command inside the project folder:
+Führe folgenden Befehl im Ordner aus:
 
 ```bash
-pip install librosa numpy soundfile
+pip install librosa numpy soundfile PyQt6
 ```
-*(If you see an "externally-managed-environment" error on Linux, create a virtualenv first: `python3 -m venv venv && source venv/bin/activate`)*
 
 ---
 
-### 4️⃣ Synchronize your Video! ✨
+### 4️⃣ Starten! (Wähle GUI oder CLI)
 
-Copy your **video file** and your **song (MP3/WAV)** into the folder (or use absolute paths).
-
-Then run:
-
+#### 🖥️ Option A: Mit Graphischer Oberfläche (GUI)
+Starte das Programm einfach mit dem `--gui` Parameter:
 ```bash
-python beat_sync_cutter.py --video "YourVideo.mp4" --audio "YourSong.mp3" --output "SyncedOutput.mp4"
+python beat_sync_cutter.py --gui
+```
+*(Es öffnet sich ein übersichtliches Fenster mit Datei-Browsern, Fortschrittsbalken und Live-Logs!)*
+
+#### 💻 Option B: Im Terminal (CLI)
+```bash
+python beat_sync_cutter.py --video "DeinVideo.mp4" --audio "DeinSong.mp3" --output "SyncedOutput.mp4"
 ```
 
-> 💡 **Tip:** If your filenames contain spaces, always wrap them in quotation marks `" "` (as shown above).
 
 ---
 
