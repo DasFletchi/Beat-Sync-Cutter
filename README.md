@@ -1,50 +1,78 @@
-# Beat-Sync Cutter 🎬🎵
+# 🎬 Minecraft Beat-Sync Cutter 🎵
 
-Automatically cut and sync cinematics (or any video footage) to audio beats, transients, kick drums, and synth drops using Python, **Librosa** audio onset detection, and **FFmpeg**.
+Schneidet deine **Minecraft Cinematics** (oder beliebige Videos) automatisch **haargenau auf den Beat, die Kicks und Synth-Drops** deines Lieblingssongs!
 
----
-
-## 🌟 Features
-- **True Transient & Beat Onset Detection:** Uses `librosa.onset` to detect actual audio hits (kicks, snares, synth drops) instead of rigid grid BPM.
-- **Dynamic Scene Switching:** Swaps camera angles and cinematics on every hit.
-- **Fast & Efficient Rendering:** Lightweight encoding settings with configurable resolutions.
-- **Automatic Audio Overlay:** Merges the original audio track perfectly synced to the new cut sequence.
+Kein manuelles Schneiden in Premiere Pro, DaVinci Resolve oder CapCut nötig. Ein Befehl reicht und das Video ist perfekt auf die Musik synchronisiert. 🚀
 
 ---
 
-## 📋 Requirements & Installation
+## 🐣 Schritt-für-Schritt Anleitung für Einsteiger / Anfänger
 
-Make sure you have `ffmpeg` installed on your system:
+Du hast noch nie mit Python oder dem Terminal gearbeitet? Kein Problem! Befolge einfach diese einfachen Schritte:
+
+### 1️⃣ Voraussetzungen installieren
+
+#### 🐧 Auf Linux (Ubuntu/Debian)
+Öffne dein Terminal (Strg + Alt + T) und füg diesen Befehl ein:
 ```bash
-sudo apt install ffmpeg
+sudo apt update && sudo apt install -y python3 python3-pip ffmpeg git
 ```
 
-Install Python dependencies:
+#### 🪟 Auf Windows
+1. Lade dir [Python](https://www.python.org/downloads/) herunter (Haken bei **"Add Python to PATH"** bei der Installation aktivieren!).
+2. Lade dir [FFmpeg](https://ffmpeg.org/download.html) herunter und füge es zu deinen Umgebungsvariablen hinzu.
+
+---
+
+### 2️⃣ Dieses Projekt herunterladen (Klonen)
+
+Öffne dein Terminal / die Eingabeaufforderung und führe aus:
+
+```bash
+git clone https://github.com/DasFletchi/Minecraft-Beat-Sync-Cutter.git
+cd Minecraft-Beat-Sync-Cutter
+```
+
+---
+
+### 3️⃣ Benötigte Pakete installieren
+
+Führe folgenden Befehl im Ordner aus:
+
 ```bash
 pip install librosa numpy soundfile
 ```
+*(Falls eine Meldung bezüglich "externally-managed-environment" kommt, erstelle ein venv mit `python3 -m venv venv && source venv/bin/activate`)*
 
 ---
 
-## 🚀 Quick Start
+### 4️⃣ Video synchronisieren (Der Zauberbefehl ✨)
 
-Run the script by providing your video clips and audio track:
+Kopiere dein **Video** und dein **Audio/Song** in den gleichen Ordner oder erstelle deine Dateien an einem beliebigen Ort.
+
+Führe dann einfach den Befehl aus:
 
 ```bash
-python beat_sync_cutter.py --video "/path/to/minecraft_cinematic.webm" --audio "/path/to/song.mp3" --output "synced_edit.mp4"
+python beat_sync_cutter.py --video "DeinMinecraftVideo.mp4" --audio "DeinSong.mp3" --output "MeinFertigesBeatVideo.mp4"
 ```
 
-### Options
-
-| Flag | Short | Description | Default |
-|------|-------|-------------|---------|
-| `--video` | `-v` | Path to source video file | *Required* |
-| `--audio` | `-a` | Path to input audio file | *Required* |
-| `--output` | `-o` | Output file path | `output_synced.mp4` |
-| `--min-cut-dur` | | Minimum clip cut length in seconds | `0.35` |
-| `--scale` | | FFmpeg video scale resolution | `1280:-2` |
+> 💡 **Tipp:** Wenn deine Dateinamen Leerzeichen enthalten, setze sie immer in Anführungszeichen `" "` (wie oben gezeigt).
 
 ---
 
-## 📜 License
-MIT License
+## ⚙️ Einstellungen & Optionen (Optional)
+
+Wenn du das Verhalten anpassen möchtest, kannst du folgende Zusatz-Parameter an den Befehl anhängen:
+
+| Parameter | Beschreibung | Beispiel |
+|-----------|--------------|----------|
+| `--video` / `-v` | **(Pflicht)** Pfad zu deinem Video | `--video "video.mp4"` |
+| `--audio` / `-a` | **(Pflicht)** Pfad zu deiner Audiodatei | `--audio "song.mp3"` |
+| `--output` / `-o` | Name des fertigen Videos | `--output "result.mp4"` |
+| `--min-cut-dur` | Mindestlänge eines Clips in Sekunden (verhindert zu schnelles Flackern) | `--min-cut-dur 0.4` |
+| `--scale` | Auflösung des Ausgabevideos (z.B. `1920:-2` für Full HD) | `--scale 1920:-2` |
+
+---
+
+## 📜 Lizenz
+MIT License - Kostenlos nutzbar & anpassbar!
