@@ -46,11 +46,21 @@ cd Beat-Sync-Cutter
 
 ### 3️⃣ Benötigte Pakete installieren
 
-Führe folgenden Befehl im Ordner aus:
+Auf modernen Linux-Systemen (Ubuntu, Pop!_OS, Debian) gibt Python den Fehler `externally-managed-environment` aus. Du kannst die Pakete auf zwei Arten installieren:
 
+#### Variante A: Mit Virtual Environment (Empfohlen)
 ```bash
+python3 -m venv venv
+source venv/bin/activate
 pip install librosa numpy soundfile PyQt6
 ```
+
+#### Variante B: Direkt für den aktuellen User
+```bash
+pip install librosa numpy soundfile PyQt6 --break-system-packages
+```
+*(Oder per `apt`: `sudo apt install python3-librosa python3-numpy python3-soundfile python3-pyqt6`)*
+
 
 ---
 
