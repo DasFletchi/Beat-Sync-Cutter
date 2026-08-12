@@ -164,7 +164,7 @@ class BeatSyncGUI(QMainWindow):
 
         # Video Input
         v_layout = QHBoxLayout()
-        self.video_edit = QQLineEdit()
+        self.video_edit = QLineEdit()
         self.video_edit.setPlaceholderText("Select input video file (.mp4, .webm, .mkv)...")
         btn_video = QPushButton("Browse Video")
         btn_video.clicked.connect(self.browse_video)
@@ -173,7 +173,7 @@ class BeatSyncGUI(QMainWindow):
 
         # Audio Input
         a_layout = QHBoxLayout()
-        self.audio_edit = QQLineEdit()
+        self.audio_edit = QLineEdit()
         self.audio_edit.setPlaceholderText("Select input audio file (.mp3, .wav, .flac)...")
         btn_audio = QPushButton("Browse Audio")
         btn_audio.clicked.connect(self.browse_audio)
@@ -182,7 +182,7 @@ class BeatSyncGUI(QMainWindow):
 
         # Output Input
         o_layout = QHBoxLayout()
-        self.output_edit = QQLineEdit()
+        self.output_edit = QLineEdit()
         self.output_edit.setPlaceholderText("Select destination output file (.mp4)...")
         btn_output = QPushButton("Browse Save Path")
         btn_output.clicked.connect(self.browse_output)
