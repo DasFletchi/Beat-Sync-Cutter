@@ -99,4 +99,4 @@ python beat_sync_cutter.py --video "YourVideo.mp4" --audio "YourSong.mp3" --outp
 
 ## 📜 License
 
-MIT License — do whatever you want with it. 🤖
+MIT License
