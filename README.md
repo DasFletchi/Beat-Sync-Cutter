@@ -16,71 +16,320 @@ No manual editing in Premiere Pro, DaVinci Resolve, or CapCut needed. One comman
 
 ## 🐣 Beginner Step-by-Step Guide
 
-Never used Python or the terminal before? No problem — follow these steps.
+Never used Python or the terminal before? No problem — follow the steps below. The Linux instructions are written for Ubuntu, Debian, and Pop!_OS.
 
-### 1️⃣ Install prerequisites
+### What you are installing
 
-#### 🐧 On Linux (Ubuntu / Debian)
-Open your terminal (`Ctrl` + `Alt` + `T`) and run:
-
-```bash
-sudo apt update && sudo apt install -y python3 python3-pip ffmpeg git
-```
-
-#### 🪟 On Windows
-1. Download & install [Python](https://www.python.org/downloads/) (make sure to check **"Add Python to PATH"** during installation).
-2. Download [FFmpeg](https://ffmpeg.org/download.html) and add it to your System Environment Variables (PATH).
+- **Python 3** runs the program.
+- **FFmpeg** reads, cuts, scales, and joins video and audio files.
+- **librosa** analyzes the music and detects onsets/beats.
+- **NumPy** and **SoundFile** support the audio analysis.
+- **PyQt6** creates the graphical user interface (GUI).
+- A **virtual environment** keeps this project's Python packages separate from the rest of your system.
 
 ---
 
-### 2️⃣ Clone this repository
+## 🐧 Linux: First-time setup
 
-Open your terminal / command prompt and run:
+### 1️⃣ Open a terminal
+
+On Pop!_OS, Ubuntu, or Debian, press **Ctrl + Alt + T** to open a terminal.
+
+### 2️⃣ Install system requirements
+
+Copy and paste this command:
 
 ```bash
-git clone https://github.com/DasFletchi/Beat-Sync-Cutter.git
+sudo apt update
+sudo apt install -y python3 python3-pip python3-venv ffmpeg git
+```
+
+What each part does:
+
+- `sudo` runs the installation with administrator permissions. Your password may be requested; nothing will appear while you type it.
+- `apt update` refreshes the list of available system packages. It does **not** install the program yet.
+- `apt install` installs packages.
+- `-y` automatically answers “yes” to the installation prompts.
+- `python3` installs Python.
+- `python3-pip` installs Python's package installer.
+- `python3-venv` allows us to create a virtual environment. This package is easy to miss and is required for the setup below.
+- `ffmpeg` and `git` install the video tools and Git.
+
+### 3️⃣ Open the project folder
+
+If you downloaded the project as a ZIP file, extract it first. Then run `cd` with the path to the extracted folder. For example:
+
+```bash
+cd ~/Downloads/Beat-Sync-Cutter-master/Beat-Sync-Cutter-master
+```
+
+`cd` means **change directory**. It tells the terminal where the project files are located.
+
+You can check that you are in the correct folder with:
+
+```bash
+pwd
+ls
+```
+
+- `pwd` prints the current folder.
+- `ls` lists the files in the current folder. You should see `beat_sync_cutter.py` and `gui.py`.
+
+If you prefer to clone the project with Git instead of downloading a ZIP, use:
+
+```bash
+git clone -b master https://github.com/DasFletchi/Beat-Sync-Cutter.git
 cd Beat-Sync-Cutter
 ```
 
----
+- `git clone` downloads the project **and** its Git history.
+- `-b master` checks out the project's `master` branch.
+- `cd Beat-Sync-Cutter` enters the newly downloaded folder.
 
-### 3️⃣ Install required Python packages
+A Git clone is recommended if you want to receive future updates with `git pull`. A ZIP download does not contain the hidden `.git` folder and cannot use `git pull` until you clone the repository separately.
 
-On modern Linux distributions you may encounter the `externally-managed-environment` error when installing packages globally. You can install dependencies in one of two ways:
+### 4️⃣ Create a virtual environment
 
-#### Option A: Use a virtual environment (recommended)
+Run this once, from inside the project folder:
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate
-pip install librosa numpy soundfile PyQt6
 ```
 
-#### Option B: Install for the current user
+What this command does:
+
+- `python3 -m venv` tells Python to run its built-in virtual-environment tool.
+- The final `venv` is the folder name that will be created inside the project.
+- The environment contains its own Python and its own installed packages.
+
+You only need to create this environment once. It is intentionally not uploaded to GitHub because it is specific to your computer.
+
+### 5️⃣ Activate the virtual environment
+
+Run:
 
 ```bash
-pip install --user librosa numpy soundfile PyQt6
+source venv/bin/activate
 ```
 
-*(Alternatively, on some systems you can install via apt: `sudo apt install python3-librosa python3-numpy python3-soundfile python3-pyqt6`.)*
+`source` loads a script into the current terminal session. This script changes the terminal to use the Python inside `venv`.
 
----
+After activation, your terminal prompt should begin with something like:
 
-### 4️⃣ Run the program (GUI or CLI)
+```text
+(venv) user@computer:~/...$
+```
 
-#### 🖥️ Option A: Graphical Interface (GUI)
-Start the program with the `--gui` parameter:
+Seeing `(venv)` is important: it means that the project's Python packages will be used.
+
+### 6️⃣ Install the Python packages
+
+With `(venv)` active, run:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install librosa numpy soundfile PyQt6
+```
+
+What each command does:
+
+- `python` now means the Python inside `venv`.
+- `-m pip` runs the package installer belonging to that exact Python. This avoids installing packages into the wrong Python installation.
+- `install --upgrade pip` updates the package installer.
+- `install librosa numpy soundfile PyQt6` installs all Python libraries required by Beat-Sync Cutter.
+
+### 7️⃣ Start the GUI for the first time
+
+Still in the same terminal and with `(venv)` active, run:
 
 ```bash
 python beat_sync_cutter.py --gui
 ```
 
-*A window will open with file pickers, progress bars, and live logs.*
+- `python beat_sync_cutter.py` runs the main program.
+- `--gui` tells it to open the graphical interface.
 
-#### 💻 Option B: Command Line (CLI)
+A window should open with video/audio file selectors, render settings, a progress bar, and logs.
+
+---
+
+## 🔁 Starting it again later
+
+You do **not** need to reinstall the packages every time. Open a new terminal and run:
 
 ```bash
-python beat_sync_cutter.py --video "YourVideo.mp4" --audio "YourSong.mp3" --output "SyncedOutput.mp4"
+cd ~/Downloads/Beat-Sync-Cutter-master/Beat-Sync-Cutter-master
+source venv/bin/activate
+python beat_sync_cutter.py --gui
+```
+
+The commands mean:
+
+1. Enter the project folder.
+2. Activate the existing virtual environment.
+3. Start the GUI using the correct Python and installed packages.
+
+If you cloned the repository instead, use the path of that clone:
+
+```bash
+cd ~/Beat-Sync-Cutter
+source venv/bin/activate
+python beat_sync_cutter.py --gui
+```
+
+When you are finished, you can leave the virtual environment with:
+
+```bash
+deactivate
+```
+
+This only exits the environment for the current terminal. It does not delete anything.
+
+---
+
+## 🛠️ Common Linux problems
+
+### `python: command not found`
+
+On many Linux systems, the command is called `python3`, not `python`. After activating `venv`, the command `python` works because the virtual environment provides it. If you are not using an activated environment, use `python3`.
+
+### `ModuleNotFoundError: No module named 'numpy'`
+
+The required packages are not installed in the Python environment that started the program. Run:
+
+```bash
+cd ~/Downloads/Beat-Sync-Cutter-master/Beat-Sync-Cutter-master
+source venv/bin/activate
+python -m pip install librosa numpy soundfile PyQt6
+python beat_sync_cutter.py --gui
+```
+
+If `venv` does not exist yet, create it first:
+
+```bash
+python3 -m venv venv
+```
+
+### `No module named venv`
+
+Install the missing system package and create the environment again:
+
+```bash
+sudo apt install -y python3-venv
+python3 -m venv venv
+```
+
+### `ffmpeg: command not found` or `ffprobe: command not found`
+
+Install FFmpeg:
+
+```bash
+sudo apt update
+sudo apt install -y ffmpeg
+```
+
+### The terminal says the folder does not exist
+
+Use the actual path where you extracted or cloned the project. You can type `cd ` (including the space) and then drag the project folder from your file manager into the terminal. Press **Enter** afterwards.
+
+---
+
+## 🔄 Updating an existing Git clone
+
+These commands only work if you used `git clone`. They do not work in a ZIP folder because a ZIP does not contain Git history.
+
+### Before pulling updates
+
+First enter the folder and check whether you have local changes:
+
+```bash
+cd ~/Beat-Sync-Cutter
+git status --short --branch
+```
+
+- `git status` shows which files were changed locally.
+- `--short` keeps the output brief.
+- `--branch` also shows your current branch.
+
+If you changed `README.md` or another project file, make a backup before pulling:
+
+```bash
+cp README.md README.backup.md
+```
+
+`cp` means **copy**. This creates a separate backup of your README. You can also commit your changes before updating:
+
+```bash
+git add README.md
+git commit -m "Update README"
+```
+
+- `git add` selects the changed file for the next commit.
+- `git commit` saves the change in Git history on your computer.
+
+### Pull and start the updated program
+
+```bash
+source venv/bin/activate
+git pull --ff-only origin master
+python beat_sync_cutter.py --gui
+```
+
+What they do:
+
+- `source venv/bin/activate` activates the project's existing Python environment.
+- `git pull --ff-only origin master` downloads the latest `master` branch and updates your local copy without creating an unexpected merge commit.
+- The final command starts the updated program.
+
+`git pull --ff-only` does not silently overwrite local changes. If your local version and GitHub's version conflict, Git stops and prints an error so you can resolve it safely.
+
+If Git says `not a git repository`, you are in a ZIP/extracted folder or the wrong directory. Go back to the clone folder, or clone the repository again using the instructions above. Do **not** run `git init` in a folder containing work you want to keep unless you know exactly what you are doing.
+
+---
+
+## 🪟 Windows
+
+1. Download and install [Python](https://www.python.org/downloads/). During installation, enable **“Add Python to PATH”**.
+2. Download and install [FFmpeg](https://ffmpeg.org/download.html), then add it to your System Environment Variables (`PATH`).
+3. Open PowerShell in the project folder.
+4. Create and activate the environment:
+
+```powershell
+py -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install librosa numpy soundfile PyQt6
+python beat_sync_cutter.py --gui
+```
+
+---
+
+## 💻 Command Line usage
+
+Instead of the GUI, you can run the cutter directly:
+
+```bash
+python beat_sync_cutter.py \
+  --video "YourVideo.mp4" \
+  --audio "YourSong.mp3" \
+  --output "SyncedOutput.mp4"
+```
+
+Example:
+
+```bash
+python beat_sync_cutter.py \
+  --video "gameplay.mp4" \
+  --audio "song.mp3" \
+  --output "synced_output.mp4" \
+  --min-cut-dur 0.5 \
+  --scale 1920:-2
+```
+
+Make sure the virtual environment is activated first on Linux:
+
+```bash
+source venv/bin/activate
 ```
 
 ---
@@ -89,11 +338,11 @@ python beat_sync_cutter.py --video "YourVideo.mp4" --audio "YourSong.mp3" --outp
 
 | Parameter | Description | Default / Example |
 |-----------|-------------|-------------------|
-| `--video` / `-v` | **(Required)** Path to input video | `--video "gameplay.mp4"` |
-| `--audio` / `-a` | **(Required)** Path to input audio track | `--audio "song.mp3"` |
+| `--video` / `-v` | **(Required)** Path to input video file | `--video "gameplay.mp4"` |
+| `--audio` / `-a` | **(Required)** Path to input audio file | `--audio "song.mp3"` |
 | `--output` / `-o` | Path for final synced video | `--output "synced.mp4"` |
 | `--min-cut-dur` | Minimum clip length in seconds (prevents seizure-inducing flicker) | `--min-cut-dur 0.35` |
-| `--scale` | Output video resolution via FFmpeg | `--scale 1920:-2` |
+| `--scale` | Output video resolution via FFmpeg | `--scale 1280:-2` |
 
 ---
 
